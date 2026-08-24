@@ -1,10 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 
-const CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME?.trim()
-const API_ORIGIN = CODESPACE_NAME
-  ? `https://${CODESPACE_NAME}-8000.app.github.dev`
-  : 'http://localhost:8000'
-
 function normalizeCollectionResponse(payload) {
   if (Array.isArray(payload)) {
     return payload
@@ -27,12 +22,11 @@ function normalizeCollectionResponse(payload) {
   return []
 }
 
-export default function ApiSection({ title, endpoint, renderItem }) {
+export default function ApiSection({ title, requestUrl, renderItem }) {
   const [items, setItems] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-
-  const requestUrl = useMemo(() => `${API_ORIGIN}/api/${endpoint}/`, [endpoint])
+  const normalizedRequestUrl = useMemo(() => requestUrl, [requestUrl])
 
   useEffect(() => {
     let isMounted = true
@@ -42,7 +36,7 @@ export default function ApiSection({ title, endpoint, renderItem }) {
       setError('')
 
       try {
-        const response = await fetch(requestUrl)
+        const response = await fetch(normalizedRequestUrl)
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
@@ -71,13 +65,13 @@ export default function ApiSection({ title, endpoint, renderItem }) {
     return () => {
       isMounted = false
     }
-  }, [requestUrl])
+  }, [normalizedRequestUrl])
 
   return (
     <section className="container py-4">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
         <h2 className="mb-0">{title}</h2>
-        <small className="text-body-secondary">GET {requestUrl}</small>
+        <small className="text-body-secondary">GET {normalizedRequestUrl}</small>
       </div>
 
       {isLoading && <p>Loading...</p>}
@@ -97,5 +91,3 @@ export default function ApiSection({ title, endpoint, renderItem }) {
     </section>
   )
 }
-
-export { API_ORIGIN, CODESPACE_NAME }

@@ -1,10 +1,16 @@
 import ApiSection from './ApiSection'
 
+const CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME?.trim()
+const API_ORIGIN = CODESPACE_NAME
+  ? `https://${CODESPACE_NAME}-8000.app.github.dev`
+  : 'http://localhost:8000'
+const ACTIVITIES_API_URL = `${API_ORIGIN}/api/activities/`
+
 export default function Activities() {
   return (
     <ApiSection
       title="Activities"
-      endpoint="activities"
+      requestUrl={ACTIVITIES_API_URL}
       renderItem={(activity) => (
         <>
           <h3 className="h5 mb-1">{activity.name ?? activity.activity_name ?? 'Activity'}</h3>

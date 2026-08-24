@@ -4,7 +4,8 @@ import Leaderboard from './components/Leaderboard'
 import Teams from './components/Teams'
 import Users from './components/Users'
 import Workouts from './components/Workouts'
-import { CODESPACE_NAME } from './components/ApiSection'
+
+const CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME?.trim()
 
 const navItems = [
   { path: '/users', label: 'Users' },
