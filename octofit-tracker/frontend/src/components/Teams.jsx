@@ -1,10 +1,9 @@
 import ApiSection from './ApiSection'
 
 const CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME?.trim()
-const API_ORIGIN = CODESPACE_NAME
-  ? `https://${CODESPACE_NAME}-8000.app.github.dev`
-  : 'http://localhost:8000'
-const TEAMS_API_URL = `${API_ORIGIN}/api/teams/`
+const TEAMS_API_URL = CODESPACE_NAME
+  ? `https://${CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
 
 export default function Teams() {
   return (

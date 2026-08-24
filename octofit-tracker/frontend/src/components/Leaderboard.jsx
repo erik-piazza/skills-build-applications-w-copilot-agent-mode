@@ -1,10 +1,9 @@
 import ApiSection from './ApiSection'
 
 const CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME?.trim()
-const API_ORIGIN = CODESPACE_NAME
-  ? `https://${CODESPACE_NAME}-8000.app.github.dev`
-  : 'http://localhost:8000'
-const LEADERBOARD_API_URL = `${API_ORIGIN}/api/leaderboard/`
+const LEADERBOARD_API_URL = CODESPACE_NAME
+  ? `https://${CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
 
 export default function Leaderboard() {
   return (

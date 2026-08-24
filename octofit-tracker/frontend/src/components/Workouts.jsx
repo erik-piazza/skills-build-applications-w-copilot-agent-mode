@@ -1,10 +1,9 @@
 import ApiSection from './ApiSection'
 
 const CODESPACE_NAME = import.meta.env.VITE_CODESPACE_NAME?.trim()
-const API_ORIGIN = CODESPACE_NAME
-  ? `https://${CODESPACE_NAME}-8000.app.github.dev`
-  : 'http://localhost:8000'
-const WORKOUTS_API_URL = `${API_ORIGIN}/api/workouts/`
+const WORKOUTS_API_URL = CODESPACE_NAME
+  ? `https://${CODESPACE_NAME}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/'
 
 export default function Workouts() {
   return (
