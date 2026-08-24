@@ -1,24 +1,22 @@
 import cors from 'cors';
 import express from 'express';
+import apiRouter from './routes';
+import baseUrl from './config/baseUrl';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const codespaceName = process.env.CODESPACE_NAME;
-const baseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000';
+app.use('/api', apiRouter);
 
-app.get('/api/', (_req, res) => {
-  res.json({
-    users: `${baseUrl}/api/users/`,
-    teams: `${baseUrl}/api/teams/`,
-    activities: `${baseUrl}/api/activities/`,
-    leaderboard: `${baseUrl}/api/leaderboard/`,
-    workouts: `${baseUrl}/api/workouts/`,
-  });
+app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  if (err instanceof Error) {
+    res.status(500).json({ error: err.message });
+    return;
+  }
+
+  res.status(500).json({ error: 'Unknown server error' });
 });
 
 export { app, baseUrl };

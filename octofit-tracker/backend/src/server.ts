@@ -1,5 +1,6 @@
 import 'dotenv/config';
-import app, { baseUrl } from './app';
+import app from './app';
+import baseUrl from './config/baseUrl';
 import './config/database';
 
 const PORT = Number(process.env.PORT) || 8000;
